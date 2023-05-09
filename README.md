@@ -26,7 +26,7 @@ Prior to using this code to calculate tissue types, make sure when hand mapping 
 
 If you still have more then the 13 tissue mapping colors, even after you confirmed the Pencil Tool's hardness level was at 100%, it is most likely that you have un-tissue mapped/un-colored areas. 
 
-Cortical bone tissue map images must be flatten and converted into a PNG file.
+Cortical bone tissue map images must be flatten, converted into a PNG file, and in grayscale. 
 
 ### Tissue Mapping
 Please refer to McFarlin *et al*., 2006/McFarlin *et al.*, 2008, and McFarlin *et al.*, 2016 publications for information on how to tissue map cortical bone (Fig. 3).
@@ -45,30 +45,9 @@ Fig. 3 Example of cortical bone tissue type mapping. For cortical bone tissue ma
 - dummies
 
 ## 1 First code section
-The first code section/function (PixelCount) reads in the PNG file and converts the image into grayscale, calculates the number of pixels for each tissue map color, and returns a gradient map and value data frame table with 2 variables (Var1 & Freq) and 12 objects (i.e., tissue types + background color).
+The first code section/function (PixelCount) reads in the PNG file and calculates the number of pixels for each tissue map color, and returns a gradient map and value data frame table with 2 variables (Var1 & Freq) and 13 objects (i.e., tissue types + background color).
 
-The 13 object numbers in Var1 correspond to these cortical bone tissue types:
-
-Background
-- 255 - White background
-
-Periostseal origin tissue
-- 43 - Fibro-lamellar complex (FLC)
-- 57 - Transitional Fibro-lamellar complex (FLC-LZPO)
-- 80 - Parallel-fiered (PF)
-- 99 - Transitional Parallel-fiered to Lamellar (PF-LAM)
-- 154 - Lamellar (LAM)
-
-Endosteal origin tissue 
-- 121 - Parallel-fiered (EPF)
-- 145 - Transitional Parallel-fiered to Lamellar (EPF-LAM)
-- 162 - Lamellar (ELAM)
-- 134 - Compacted Coarse Cancellous (ECC)
-
-Other tissue types
-- 97 - Osteonal tissue (HAV)
-- 226 - Sharpey's fiber (SF)
-- 200 - Interstitial bone tissue (INT)
+The 13 object numbers in Var1 correspond to these cortical bone tissue types.
 
 Note: Because the image file types tend to be massive (even after reducing file size) and can take a relatively long time computing pixel number, the current code if for one image at a time, however, it is possible to apply this code in a loop. 
 
