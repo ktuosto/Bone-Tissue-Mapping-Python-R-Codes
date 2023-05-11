@@ -56,7 +56,7 @@ The first code section/function (PixelCount) reads in the PNG file and calculate
 
 The 13 object numbers in Var1 correspond to these cortical bone tissue types.
 
-Note: Because the image file types tend to be massive (even after reducing file size) and can take a relatively long time computing pixel number, the current code is for one image at a time, however, it is possible to apply this code in a loop. 
+**Note: Because the image file types tend to be massive (even after reducing file size) and can take a relatively long time computing pixel number, the current code is for one image at a time, however, it is possible to apply this code in a loop.** 
 
 The second part of this code changes the structure of the data out put from long data to wide data, adds a column for individual ID, and renames the columns to the specific bone tissue type. 
 
