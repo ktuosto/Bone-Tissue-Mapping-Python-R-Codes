@@ -2,10 +2,12 @@
 
 This project is broken into two sections: Python and R. 
 
-The Python code section has two types of codes:
+The Python code section has two* types of codes:
 
 1) Code to count the specific color of pixels in an image that matches the color key (see Fig. 3).
 2) Code to create new columns and variables (i.e., percent area variables).
+
+*In the process of developing a deep learning algorithm to partially or fully tissue map bone histological images. 
 
 The R code is broken up into five sections:
 
@@ -23,12 +25,13 @@ We also know that modern humans have a unique growth pattern--rapid growth as in
 
 However, we cannot visually observe the growth patterns in hominins as they are all extinct, and all that remains are parts of their fossilized skeletal systems. 
 
-Luckily for people studying human evolution, the bones of the skeletal system are like tree rings, keeping a record of current and past growth. We can map the patterns of growth based on how fast or slow bone tissue is deposited in a bone cross-section (Fig. 1).
+Luckily for people studying human evolution, the bones of the skeletal system are like tree rings, keeping a record of the individual's growth. We can map the patterns of growth based on how fast or slow bone tissue is deposited in a bone cross-section to understand how an individual grew in life after death (Fig. 1).
 
-However, there are few comparative data on bone microanatomy from our closest living relatives, the nonhuman primates, monkeys and apes. Such data would allow us to understand whether this pattern is unique to humans, and if so, provide a better understanding of the evolution of this growth pattern in the human fossil record (McFarlin *et al.*, 2016).
+Unfortunately, there are few comparative datasets on bone microanatomy from our closest living relatives--apes and monkeys--and few comparative analyses of bone microanatomy growth patterns between ape species (McFarlin *et al.*, 2016; Tuosto *et al*., 2019).  
 
-![Growth pic2](https://github.com/ktuosto/Cortical_bone_tissue_type_calculation/assets/49923281/e91914cb-7b30-4c15-8d40-c0a1b425d058)
-Fig. 1 Modern human bone growth microstructural pattern. Bone microstructures from McFarlin *et al.*, 2016 (Tuosto *et al*., 2019 poster presentation at the International Symposium on Palaeohistology, South Africa). 
+Understanding the growth pattern differences in our closest living primate relatives can help us determine the potential growth patterns our early human ancestors followed.
+
+##Add image of bone cross-section
 
 # Project Objective
 The objective of this project is to determine if nonhuman primates (i.e., monkeys, chimpanzees, gibbons, etc) have evidence of similar bone growth patterns as modern humans (i.e., fast-slow-fast growth pattern) from their bone microstructure during bone growth or if this growth pattern is unique to humans. 
