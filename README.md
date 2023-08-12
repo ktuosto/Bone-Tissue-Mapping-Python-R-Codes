@@ -1,9 +1,29 @@
-# Cortical_bone_tissue_type_calculation
+# Codes Overview:
 
-This code is used to calculate the pixel amount of different cortical bone tissue (tissue that makes up bone) types after a bone section has been mapped following McFarlin et al., 2016 method, basic statistical analysis (i.e., mean, standard deviation, principal component analysis - PCA) of tissue types between age groups within a species and between species, and basic data visualization.
+This project is broken into two sections: Python and R. 
+
+The Python code section has two types of codes:
+
+1) Code to count the specific color of pixels in an image that matches the color key (see Fig. 3).
+2) Code to create new columns and variables (i.e., percent area variables).
+
+The R code is broken up into five sections:
+
+1) Descriptive Statistics
+2) Exploratory Data Analysis
+3) Statistical Testing Analysis - ANOVA and Linear Regression
+4) Multivariate Analysis - Principal Component Analysis (PCA)
+5) Predictive Analysis
 
 # Project Background 
-Modern humans have a unique life history pattern, characterized by slow body growth during childhood followed by accelerated growth during adolescence. This is evidenced by deposition of fast-forming fibro-lamellar bone during infancy and adolescence, and the absence of this tissue type during childhood (Fig. 2) (Goldman *et al.*, 2009).
+
+In the field of human evolution, it is common to hear and read that hominins, our early human ancestors, have an 'ape-like' growth pattern. However, visual observations of growth in different ape species (i.e., gorillas, chimpanzees, orangutans, gibbons, etc) show that each ape species have their own unique growth pattern. 
+
+We also know that modern humans have a unique growth pattern--rapid growth as infants, slow growth during childhood followed by a growth spurt during puberty--compared to apes and hominins. 
+
+However, we cannot visually observe the growth patterns in hominins as they are all extinct, and all that remains are parts of their fossilized skeletal systems. 
+
+Luckily for people studying human evolution, the bones of the skeletal system are like tree rings, keeping a record of current and past growth. We can map the patterns of growth based on how fast or slow bone tissue is deposited in a bone cross-section (Fig. 1).
 
 However, there are few comparative data on bone microanatomy from our closest living relatives, the nonhuman primates, monkeys and apes. Such data would allow us to understand whether this pattern is unique to humans, and if so, provide a better understanding of the evolution of this growth pattern in the human fossil record (McFarlin *et al.*, 2016).
 
