@@ -36,27 +36,21 @@ Understanding the growth pattern differences in our closest living primate relat
 # Project Objective
 The objective of this project is to determine if nonhuman primates (i.e., monkeys, chimpanzees, gibbons, etc) have evidence of similar bone growth patterns as modern humans (i.e., fast-slow-fast growth pattern) from their bone microstructure during bone growth or if this growth pattern is unique to humans. 
 
-## Data used for practice  
-The data provided for practice is not the exact same data used for the project, which is currently being prepared for publication (Tuosto *et al.*, *in prep*). 
+## Image and data used for practice  
 
-The data is from a selcet few primates from McFarlin 2006, McFarlin *et al.*, 2008 and McFarlin *et al.*, 2016 publications. 
+**Python Image**
+The image provided for the Python code is a random bone histological image that was mapped by K. Tuosto and is not part of the images used for the project publication (Tuosto *et al.*, *in prep*).
 
-Images provided for the pixel color count code are sample images and not from the actual primates used in this study. 
-
+**R Data**
+The data provided for practice is simulated data of the data currently being prepared for publication (Tuosto *et al.*, *in prep*). 
+ 
 # Code
 The code is broken up into 4 sections:
 
 1. Pixel color count code - Code that calculates the number of pixels in an image (practice image provided), and provides a data frame with the pixel counts.
 2. Bone tissue type proportions - Code that calculates proportions of the bone tissue types from the raw pixels. 
-3. Plot bone tissue propotions - Code that plots bone tissue proportion by spieces, age group, and sex separated and combined. 
-4. Principal component analysis (PCA) - PCA code to visualize and summarize the variance within spieces, and detect broad species patterns of bone tissue types proportions.
-
-## Image preperation 
-Prior to using this code to calculate tissue types, make sure when hand mapping tissue types in Adobe Photoshop, Gimp, or other image-editing sowftware the Pencil Tool is at a hardness level of 100%, otherwise you will have thousands of different pixel colors vs the 13 tissue mapping colors. 
-
-If you still have more then the 13 tissue mapping colors, even after you confirmed the Pencil Tool's hardness level was at 100%, it is most likely that you have un-tissue mapped/un-colored areas. 
-
-Cortical bone tissue map images must be flatten, converted into a PNG file, and in grayscale. 
+3. Plot bone tissue proportions - Code that plots bone tissue proportion by species, age group, and sex separated and combined. 
+4. Principal component analysis (PCA) - PCA code to visualize and summarize the variance within species, and detect broad species patterns of bone tissue types proportions.
 
 ### Tissue Mapping
 Please refer to McFarlin *et al*., 2006/McFarlin *et al.*, 2008, and McFarlin *et al.*, 2016 publications for information on how to tissue map cortical bone (Fig. 3).
@@ -64,7 +58,7 @@ Please refer to McFarlin *et al*., 2006/McFarlin *et al.*, 2008, and McFarlin *e
 Or if you would like guidance on the tissue mapping method, please feel free to contact me on GitHub. 
 
 ![TissueMappingColorCodes](https://github.com/ktuosto/Cortical_bone_tissue_type_calculation/assets/49923281/433b407c-b49f-462d-84ab-e7fd762e6fc8)
-Fig. 3 Example of cortical bone tissue type mapping. For cortical bone tissue mapping you will need a brightfield (LM) and circularly-polarized light (CPL) or polarized light (PL) images layered ontop of each other with the CPL/PL at a reduced opacity. Mapping of the various tissue types should be done in their own layer. Note, interstitial bone tissue (INT) is missing from color table (Tuosto *et al*., 2019 poster presentation at the International Symposium on Palaeohistology, South Africa).
+Fig. 3 Example of cortical bone tissue type mapping. For cortical bone tissue mapping you will need a brightfield (LM) and circularly-polarized light (CPL) or polarized light (PL) images layered on top of each other with the CPL/PL at a reduced opacity. Mapping of the various tissue types should be done in their own layer. Note, interstitial bone tissue (INT) is missing from the color table (Tuosto *et al*., 2019 poster presentation at the International Symposium on Palaeohistology, South Africa).
 
 # Code sections
 
