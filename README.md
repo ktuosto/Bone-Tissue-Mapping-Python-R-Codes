@@ -2,13 +2,11 @@
 
 This project is broken into two sections: Python and R. 
 
-The Python code section has three* types of codes:
+The Python code section has three types of codes:
 
 1) Code to count the specific color of pixels in an image that matches the color key (see Fig. 3).
 2) Code to convert and create new variables (i.e., percent area variables) for one map value and batch-process multiple data frames.
 3) Code to batch-process images and convert and create new variables at once. 
-
-*In the process of developing a deep learning algorithm to partially or fully tissue map bone histological images. 
 
 The R code is broken up into five sections:
 
