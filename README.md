@@ -65,30 +65,31 @@ simulation_primate_bone.csv
 The image provided for the Python code is a random bone histological image that was mapped by K. Tuosto and is not part of the images used for the project publication (Tuosto *et al.*, *in prep*).
 
 **R Data**
-The data provided for practice is simulated data of the data currently being prepared for publication (Tuosto *et al.*, *in prep*). There are #  observations and 20 variables.
+The data provided for practice is simulated data of the data currently being prepared for publication (Tuosto *et al.*, *in prep*). There are #  observations and 21 variables.
 
 **Note: Genus has been modified for the practice set.**
 
-1) GENUS = Ape 1, Ape 2, Ape 3, Monkey 1
-2) SEX = M (male), F (female), U (unknown)
-3) AGE = Ages based on dental eruption and skeletal fusion, 6 age classes from youngest to oldest: PDICED, DECID, M1, M2, M3, EPIPH
-4) WOV = Fastest forming bone regardless of bone cortex, mostly observed on the outer cortex
-5) FLC = Fast-forming bone regardless of bone cortex, mostly observed on the outer cortex
-6) FLC-LZPO = Fast-forming bone transitioning to slower-forming bone on the outer cortex 
-7) PF = Moderate speed forming bone on the outer cortex 
-8) PF-LAM	= Slow-forming bone on the outer cortex
-9) LAM = Slowest forming bone on the outer bone cortex 
-10) ECCC = Transition bone type 
-11) EPF = Moderate speed forming bone on the inner cortex 
-12) EPF-LAM = Slow-forming bone on the inner cortex
-13) ELAM = Slowest forming bone on the inner bone cortex 
-14) SP = Muscle attachment fibers 
-15) INTER = Bone tissue in-between osteonal bone tissue 
-16) HAV = Osteonal bone tissue 
-17) C.Ar = Cortical bone area 
-18) %CA = Percent cortical bone area 
-19) %PCA = Percent periosteal cortical bone area (i.e., outer bone cortex)
-20) %ECA = Percent endosteal cortical bone area (i.e., inner bone cortex)
+1) ID = Randomized
+2) GENUS = Ape 1, Ape 2, Ape 3, Monkey 1
+3) SEX = M (male), F (female), U (unknown)
+4) AGE = Ages based on dental eruption and skeletal fusion, 6 age classes from youngest to oldest: PDICED, DECID, M1, M2, M3, EPIPH
+5) WOV = Fastest forming bone regardless of bone cortex, mostly observed on the outer cortex
+6) FLC = Fast-forming bone regardless of bone cortex, mostly observed on the outer cortex
+7) FLC-LZPO = Fast-forming bone transitioning to slower-forming bone on the outer cortex 
+8) PF = Moderate speed forming bone on the outer cortex 
+9) PF-LAM	= Slow-forming bone on the outer cortex
+10) LAM = Slowest forming bone on the outer bone cortex 
+11) ECCC = Transition bone type 
+12) EPF = Moderate speed forming bone on the inner cortex 
+13) EPF-LAM = Slow-forming bone on the inner cortex
+14) ELAM = Slowest forming bone on the inner bone cortex 
+15) SP = Muscle attachment fibers 
+16) INTER = Bone tissue in-between osteonal bone tissue 
+17) HAV = Osteonal bone tissue 
+18) C.Ar = Cortical bone area 
+19) %CA = Percent cortical bone area 
+20) %PCA = Percent periosteal cortical bone area (i.e., outer bone cortex)
+21) %ECA = Percent endosteal cortical bone area (i.e., inner bone cortex)
 
 **For a description of each bone tissue type, see the supplemental materials from McFarlin *et al.*, 2016.**
 
