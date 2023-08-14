@@ -2,10 +2,11 @@
 
 This project is broken into two sections: Python and R. 
 
-The Python code section has two* types of codes:
+The Python code section has three* types of codes:
 
 1) Code to count the specific color of pixels in an image that matches the color key (see Fig. 3).
-2) Code to create new columns and variables (i.e., percent area variables).
+2) Code to convert and create new variables (i.e., percent area variables) for one map value and batch-process multiple data frames.
+3) Code to batch-process images and convert and create new variables at once. 
 
 *In the process of developing a deep learning algorithm to partially or fully tissue map bone histological images. 
 
@@ -39,10 +40,13 @@ The objective of this project is to explore the differences in growth patterns i
 # Code Sections
 
 ### Python Section 1: Count Pixels
-This code will count the number of pixels of the specific colors in the bone maps and provide the pixel results as a table.
+This code will count the number of pixels of the specific colors in the bone maps and provide the pixel results as a table. This code section is good if you are looking for anomalies or have large image files and low computing power. 
 
 ### Python Section 2: Create New Variables
-This code will calculate the proportions of the bone tissue types from the raw pixels and create 4 new variables from the existing variables, C.Ar, %CA, %PCA, and %ECA (see Data Description for more information). Converting the raw pixel values into proportions allows us to control for body size differences between the primates and image size differences. 
+This code will calculate the proportions of the bone tissue types from the raw pixels and create 4 new variables from the existing variables, C.Ar, %CA, %PCA, and %ECA (see Data Description for more information). Converting the raw pixel values into proportions allows us to control for body size differences between the primates and image size differences. This code file has code to process 1 image value at a time or to batch-process multiple image values.
+
+### Python Section 3: Batch-Processing Images and Values
+This code section is a combination the Python section 1 & 2, just automated for multiple images. 
 
 ### R Section 1: Descriptive Statistics
 ### R Section 2: Exploratory Data Analysis
