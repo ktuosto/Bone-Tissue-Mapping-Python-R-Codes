@@ -1,0 +1,412 @@
+---
+title: "Growth & Development in Primates"
+author: "Kristen Tuosto"
+date: "2023-08-14"
+output: html_document
+---
+
+# Descriptive Statistics 
+
+```{r csv files}
+
+library(tidyverse)
+library(ggplot2)
+library(Hmisc)
+library(dplyr)
+library(forcats)
+
+# Load data
+df_tissue <- read.csv("C:/Users/ktuos/Downloads/df_wide_tissue.csv")
+
+df_ID <- read.csv("C:/Users/ktuos/OneDrive/Desktop/Tissue_ID.csv")
+
+# Merge data
+
+df  <- merge(df_ID, df_tissue, by = 'ID')
+
+```
+
+# Examine structure of df
+```{r}
+# Check df structure 
+
+str(df)
+
+# Convert GENUS, SEX, and AGE into factors
+
+df$GENUS <- factor(df$GENUS, level = c("chlorocebus", "hylobates", "pan", "gorilla"))
+
+df$SEX <- as.factor(df$SEX)
+df$AGE <- factor(df$AGE, levels = c("DECID", "M1", "M2", "M3", "EPIPH"))
+
+# Drop pixel count variables and Percent.C.Ar
+
+df2 <- df[,-5:-19]
+
+```
+
+# Check df structure again
+```{r}
+
+# Check df structure 
+
+str(df2)
+
+```
+
+# Descriptive statistics by GENUS
+```{r}
+by(df2, df$GENUS, summary)
+```
+
+# Descriptive statistics by GENUS and AGE
+```{r}
+# List of variables you want to summarize
+vars_to_summarize <- colnames(df2[, sapply(df2, is.numeric)])
+
+# Summarize by Genus and AGE
+df_summary <- df2 %>%
+  group_by(GENUS, AGE) %>%
+  summarise_at(
+    .vars = vars_to_summarize,
+    .funs = list(mean = ~mean(., na.rm = TRUE),
+                 sd = ~sd(., na.rm = TRUE),
+                 min = ~min(., na.rm = TRUE),
+                 max = ~max(., na.rm = TRUE),
+                 count = ~sum(!is.na(.)))
+  )
+
+df_summary
+```
+
+# Descriptive statistics by GENUS, AGE, and SEX
+```{r}
+# Summarize by Genus, AGE, and SEX
+df_summary2 <- df2 %>%
+  group_by(GENUS, AGE, SEX) %>%
+  summarise_at(
+    .vars = vars_to_summarize,
+    .funs = list(mean = ~mean(., na.rm = TRUE),
+                 sd = ~sd(., na.rm = TRUE),
+                 min = ~min(., na.rm = TRUE),
+                 max = ~max(., na.rm = TRUE),
+                 count = ~sum(!is.na(.)))
+  )
+
+df_summary2
+```
+# Contingency table 
+```{r}
+# GENUS
+table(df2$GENUS)
+
+# GENUS & AGE
+table(df2$GENUS, df2$AGE)
+
+# GENUS & SEX 
+
+table(df2$GENUS, df2$SEX)
+
+# GENUS, AGE, & SEX
+table(df2$GENUS, df2$AGE, df2$SEX)
+```
+
+# Sub setting data by cortical area
+```{r}
+# Sub-cortical area dfs
+
+# Percent tissue type of cortical area df
+df_c.ar <- df2[,-18:-27]
+
+# Long format 
+df_c <- df_c.ar %>% 
+  gather(key = "Tissue", value = "Amount", -ID, -GENUS, -AGE, -SEX)
+
+# Add two new columns with biological knowledge (cortex location and deposition speed)
+
+# Cortex location 
+
+df_c$Category <- sapply(df_c$Tissue, function(tissue) {
+  if (tissue %in% c("C.Ar_ECCC", "C.Ar_ELAM", "C.Ar_EPF", "C.Ar_EPF.LAM")) {
+    return("Endosteal")
+  } else if (tissue %in% c("C.Ar_SF", "C.Ar_HAV", "C.Ar_INT")) {
+    return("Cortex")
+  } else {
+    return("Periosteal")
+  }
+})
+
+# Deposition speed
+
+df_c$Speed <- sapply(df_c$Tissue, function(tissue) {
+  if (tissue %in% c("C.Ar_SF", "C.Ar_HAV", "C.Ar_INT", "C.Ar_ECCC")) {
+    return("Neutral")
+  } else if (tissue %in% c("C.Ar_ELAM", "C.Ar_LAM")) {
+    return("Slow")
+  } else if (tissue %in% c("C.Ar_WOV", "C.Ar_FLC")) {
+    return("Fast")
+  } else {
+    return("Moderate")
+  }
+})
+
+# Rename tissue names 
+df_c$Tissue <- recode(df_c$Tissue, 
+                      `C.Ar_WOV` = "WOV",
+                      `C.Ar_FLC` = "FLC",
+                      `C.Ar_FLC.LZPO` = "FLC-LZPO",
+                      `C.Ar_PF` = "PF",
+                      `C.Ar_PF.LAM` = "PF-LAM",
+                      `C.Ar_LAM` = "LAM",
+                      `C.Ar_ECCC` = "CCC",
+                      `C.Ar_EPF` = "EPF",
+                      `C.Ar_EPF.LAM` = "EPF-LAM",
+                      `C.Ar_ELAM` = "ELAM",
+                      `C.Ar_INT` = "INT",
+                      `C.Ar_SF` = "SF",
+                      `C.Ar_HAV` = "HAV",
+                      )
+
+
+# Reordering tissue types by category and speed
+
+# Ensure the columns are factors
+df_c$Tissue <- factor(df_c$Tissue, levels = c("WOV", "FLC", "FLC-LZPO", "PF", 
+                      "PF-LAM", "LAM", "EPF", "EPF-LAM", "ELAM", "CCC", "SF", "INT", "HAV"))
+
+
+
+# Percent periosteal tissue type
+  
+df_p.ar <- df2[, c(1:4, 18:23)]
+
+# Long format 
+df_p <- df_p.ar %>% 
+  gather(key = "Tissue", value = "Amount", -ID, -GENUS, -AGE, -SEX)
+
+# Add one new column with biological knowledge (deposition speed)
+
+# Deposition speed
+
+df_p$Speed <- sapply(df_p$Tissue, function(tissue) {
+  if (tissue %in% c("P.Ar_WOV", "P.Ar_FLC")) {
+    return("Fast")
+  } else if (tissue %in% c("P.Ar_LAM")) {
+    return("Slow")
+  } else {
+    return("Moderate")
+  }
+})
+
+
+# Rename tissue names 
+df_p$Tissue <- recode(df_p$Tissue, 
+                      `P.Ar_WOV` = "WOV",
+                      `P.Ar_FLC` = "FLC",
+                      `P.Ar_FLC.LZPO` = "FLC-LZPO",
+                      `P.Ar_PF` = "PF",
+                      `P.Ar_PF.LAM` = "PF-LAM",
+                      `P.Ar_LAM` = "LAM"
+                      )
+
+
+# Reordering tissue types by category and speed
+
+# Ensure the columns are factors
+df_p$Tissue <- factor(df_p$Tissue, levels = c("WOV", "FLC", "FLC-LZPO", "PF", 
+                      "PF-LAM", "LAM"))
+
+
+# Percent endosteal tissue type
+  
+df_e.ar <- df2[,-5:-23 ]
+
+# Long format 
+df_e <- df_e.ar %>% 
+  gather(key = "Tissue", value = "Amount", -ID, -GENUS, -AGE, -SEX)
+
+# Add one new column with biological knowledge (deposition speed)
+
+# Deposition speed
+
+df_e$Speed <- sapply(df_e$Tissue, function(tissue) {
+  if (tissue %in% c("E.Ar_LAM")) {
+    return("Slow")
+  } else if (tissue %in% c("E.Ar_ECCC")) {
+    return("Neutral")
+  } else {
+    return("Moderate")
+  }
+})
+
+# Rename tissue names 
+df_e$Tissue <- recode(df_e$Tissue, 
+                      `E.Ar_ECCC` = "CCC",
+                      `E.Ar_EPF` = "EPF",
+                      `E.Ar_EPF.LAM` = "EPF-LAM",
+                      `E.Ar_ELAM` = "ELAM"
+                      )
+
+# Reordering tissue types by speed
+
+# Ensure the columns are factors
+df_e$Tissue <- factor(df_e$Tissue, levels = c("EPF", "EPF-LAM", "ELAM", "CCC"))
+
+```
+
+### Color palettes for plots
+```{r}
+# Tissue type color palette - all tissue 
+color_palette <- c("darkgreen", "forestgreen", "mediumseagreen", "seagreen3", "aquamarine3", "aquamarine2", "indianred4", "indianred", "indianred2", "darkgoldenrod1", "lemonchiffon2", "darkseagreen1", "darkslateblue")
+
+# Tissue type color palette - periosteal tissue
+color_palette1 <- c("darkgreen", "forestgreen", "mediumseagreen", "seagreen3", "aquamarine3", "aquamarine2")
+
+# Tissue type color palette - endosteal tissue 
+color_palette2 <- c("indianred4", "indianred", "indianred2", "darkgoldenrod1")
+```
+
+```{r}
+# Bar plot
+ggplot(df_c, aes(GENUS, Amount, fill = Tissue), stat="identity", position = "dodge") + 
+  stat_summary(fun.y = mean, geom = "bar", position = "dodge") + 
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", position = position_dodge(width = .96), width = 0.02) +
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  ylim(0, 80) +
+  scale_fill_manual(values= color_palette)  
+
+# The Amounts are based on means for each primate
+```
+
+
+# Plot composition of tissues relative to each other GENUS only consideration
+```{r}
+
+# Calculate the composition of tissues relative to each other
+df_c_proportions <- df_c %>%
+  group_by(GENUS) %>%
+  mutate(Proportion = Amount / sum(Amount, na.rm = TRUE))
+
+# The data represents the relative composition of tissues in terms of their contribution to the entire cortical area (i.e., the combined tissue percentages equal 100%).
+
+# Plot composition of tissues relative to each other
+ggplot(df_c_proportions, aes(x = GENUS, y = Proportion, fill = Tissue)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.90) + 
+  scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+  labs(y = "Proportion", x = "Primate") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), aspect.ratio = 5/10) +
+  scale_fill_manual(values= color_palette) 
+
+```
+
+# All cortical bone tissue types bar plot
+```{r}
+
+# Bar plot
+ggplot(df_c, aes(GENUS, Amount, fill = Tissue), stat="identity", position = "dodge") + 
+  stat_summary(fun.y = mean, geom = "bar", position = "dodge") + 
+  facet_wrap(~ AGE) + 
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", position = position_dodge(width = .96), width = 0.02) +
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  ylim(0, 80) +
+  scale_fill_manual(values= color_palette)  
+
+```
+
+# Plot composition of tissues relative to each other
+```{r}
+
+# Calculate the composition of tissues relative to each other
+df_c_proportions <- df_c %>%
+  group_by(GENUS, AGE) %>%
+  mutate(Proportion = Amount / sum(Amount, na.rm = TRUE))
+
+# The data represents the relative composition of tissues in terms of their contribution to the entire cortical area (i.e., the combined tissue percentages equal 100%).
+
+# Plot composition of tissues relative to each other
+ggplot(df_c_proportions, aes(x = GENUS, y = Proportion, fill = Tissue)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.90) + 
+  scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+  labs(y = "Proportion", x = "Primate") +
+  facet_wrap(~ AGE, ncol = 1) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), aspect.ratio = 5/10) +
+  scale_fill_manual(values= color_palette) 
+
+```
+
+
+# Periosteal tissue types bar plot
+```{r}
+
+# Bar plot
+ggplot(df_p, aes(GENUS, Amount, fill = Tissue), stat="identity", position = "dodge") + 
+  stat_summary(fun.y = mean, geom = "bar", position = "dodge") + 
+  facet_wrap(~ AGE) + 
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", position = position_dodge(width = .96), width = 0.02) +
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  ylim(0, 80) +
+  scale_fill_manual(values= color_palette1)  
+
+```
+
+# Plot composition of tissues relative to each other for periosteal area 
+```{r}
+
+# Calculate the composition of tissues relative to each other
+df_p_proportions <- df_p %>%
+  group_by(GENUS, AGE) %>%
+  mutate(Proportion = Amount / sum(Amount, na.rm = TRUE))
+
+# Plot composition of tissues relative to each other
+ggplot(df_p_proportions, aes(x = GENUS, y = Proportion, fill = Tissue)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.90) + 
+  scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+  labs(y = "Proportion", x = "Primate") +
+  facet_wrap(~ AGE, ncol = 1) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), aspect.ratio = 5/10) +
+  scale_fill_manual(values= color_palette1) 
+
+```
+
+# Endosteal bone tissue types bar plot
+```{r}
+
+# Bar plot
+ggplot(df_e, aes(GENUS, Amount, fill = Tissue), stat="identity", position = "dodge") + 
+  stat_summary(fun.y = mean, geom = "bar", position = "dodge") + 
+  facet_wrap(~ AGE) + 
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", position = position_dodge(width = .96), width = 0.02) +
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  ylim(0, 80) +
+  scale_fill_manual(values= color_palette2)  
+
+```
+
+# Plot composition of tissues relative to each other for the endosteal area 
+```{r}
+
+# Calculate the composition of tissues relative to each other 
+df_e_proportions <- df_e %>%
+  group_by(GENUS, AGE) %>%
+  mutate(Proportion = Amount / sum(Amount, na.rm = TRUE))
+
+# Plot composition of tissues relative to each other
+ggplot(df_e_proportions, aes(x = GENUS, y = Proportion, fill = Tissue)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.90) + 
+  scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+  labs(y = "Proportion", x = "Primate") +
+  facet_wrap(~ AGE, ncol = 1) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), aspect.ratio = 5/10) +
+  scale_fill_manual(values= color_palette2) 
+
+```
+
+
